@@ -1,0 +1,42 @@
+spring:
+  application.name: email
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: <username>
+    password: <password>
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+aws.mailFrom: <aws-mail>
+aws.access-key: <aws-access-key>
+aws.secret-key: <aws-secret-key>
+aws.region: <aws-region>
+
+server:
+  port: 8080
+
+management:
+  health.redis.enabled: true
+  endpoint:
+    health:
+      showDetails: always
+      default: diskSpace, ping
+      group:
+        liveness:
+          include: ${management.endpoint.health.default}
+        readiness:
+          include: ${management.endpoint.health.default}
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  metrics.tags.application: ${spring.application.name}
+
+springdoc:
+  swagger-ui.path: /
